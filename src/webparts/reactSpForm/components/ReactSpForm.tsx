@@ -28,6 +28,7 @@ import {
   mergeStyleSets
  } from 'office-ui-fabric-react';
 
+ 
  // Configure the columns for the DetailsList component
 
  let _demoListColumns = [
