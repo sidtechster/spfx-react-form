@@ -1,3 +1,7 @@
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+
 export interface IReactSpFormProps {
-  description: string;
+  listName: string;
+  context: WebPartContext;
+  siteUrl: string;
 }

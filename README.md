@@ -2,9 +2,7 @@
 
 ## Summary
 
-Short summary on functionality and used technologies.
-
-[picture of the solution in action, if possible]
+SharePoint list intake form created with SPFx React framework
 
 ## Used SharePoint Framework Version
 
@@ -25,7 +23,7 @@ Short summary on functionality and used technologies.
 
 Solution|Author(s)
 --------|---------
-folder name | Author details (name, company, twitter alias with link)
+spfx-react-form | Author: Siddhartha Roy (@sidtechster)
 
 ## Version history
 

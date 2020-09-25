@@ -12,7 +12,7 @@ import ReactSpForm from './components/ReactSpForm';
 import { IReactSpFormProps } from './components/IReactSpFormProps';
 
 export interface IReactSpFormWebPartProps {
-  description: string;
+  listName: string;
 }
 
 export default class ReactSpFormWebPart extends BaseClientSideWebPart<IReactSpFormWebPartProps> {
@@ -21,7 +21,10 @@ export default class ReactSpFormWebPart extends BaseClientSideWebPart<IReactSpFo
     const element: React.ReactElement<IReactSpFormProps> = React.createElement(
       ReactSpForm,
       {
-        description: this.properties.description
+        listName: this.properties.listName,
+        context: this.context,
+        siteUrl: this.context.pageContext.web.absoluteUrl
+
       }
     );
 
