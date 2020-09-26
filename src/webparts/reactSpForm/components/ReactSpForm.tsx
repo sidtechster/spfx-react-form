@@ -96,13 +96,30 @@ export default class ReactSpForm extends React.Component<IReactSpFormProps, IRea
         Title: "",
         DateofBirth: today.toISOString(),
         EmployeeType: "Select an option"
-      }
+      },
+      employeeTypes: []      
     };
 
     this._selection = new Selection({
       onSelectionChanged: this.onItemsSelectionChanged
     });
   }  
+
+  private getEmployeeTypes(): Promise<IDropdownOption[]>{
+    const url: string = this.props.siteUrl + "/_api/web/lists/GetByTitle('Employees')/fields?$filter=EntityPropertyName eq 'EmployeeType'";
+    return this.props.context.spHttpClient.get(url, SPHttpClient.configurations.v1)
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {      
+      var _choices: IDropdownOption[]=[];      
+      for(const r of json.value[0].Choices)
+      {
+        _choices.push({key: r, text: r});
+      }      
+      return _choices;
+    }) as Promise<IDropdownOption[]>;
+  }
 
   private _getListItems(): Promise<IListItem[]> {
     const url: string = this.props.siteUrl + "/_api/web/lists/getbytitle('Employees')/items";
@@ -122,6 +139,7 @@ export default class ReactSpForm extends React.Component<IReactSpFormProps, IRea
   }
 
   public componentDidMount(): void {
+    this.getEmployeeTypes();
     this.bindDetailsList("All records loaded successfully");
   }
 
@@ -229,10 +247,7 @@ export default class ReactSpForm extends React.Component<IReactSpFormProps, IRea
           componentRef={dropdownRef}
           placeholder="Select an option"
           label="Employee Type"
-          options={[
-            {key: 'Contractor', text: 'Contractor'},
-            {key: 'Employee', text: 'Employee'}
-          ]}
+          options={this.state.employeeTypes}
           defaultSelectedKey={this.state.listItem.EmployeeType}
           required
           className={controlClass.control}
